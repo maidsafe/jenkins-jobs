@@ -1,5 +1,6 @@
-# jenkins-jobs
-Location for storing automatically deployed Jenkins jobs
+# Jenkins Jobs
+
+This repository houses the definitions for jobs on our Jenkins instance. They are defined using the [Job DSL](https://jenkinsci.github.io/job-dsl-plugin/). Each application we're building will have its Jenkinsfile defined in its own repository, but we'll also use this repository to define Jenkinsfiles for arbitrary utility jobs that don't belong to any particular application repo.
 
 ## License
 

@@ -7,12 +7,16 @@ This repository houses the definitions for jobs on our Jenkins instance. They ar
 | Name                                          | Description                                                                                                                                                                                                                                    |
 | ----                                          | -----------                                                                                                                                                                                                                                    |
 | docker_build-safe_client_libs_build_container | Constructs a new build container for SCL. Currently this is using the experimental branch by default. It can be run manually, but soon I'll be hoping to change the SCL build process to trigger this job at the end of a merged branch build. |
+| pipeline-safe-nd                              | Release pipeline for [safe-nd](https://github.com/maidsafe/safe-nd). Currently this release process only has a simple build and test stage. |
+| pipeline-safe_client_libs                     | Release pipeline for [safe_client_libs](https://github.com/maidsafe/safe_client_libs). Has a build, test and deploy stage, with artifacts for all platforms being deployed to an S3 bucket. |
 
 ## Contributing
 
 ### Creating New Jobs
 
 When adding a new job, add the job definition to the job_dsl_seed.groovy file, then add a Jenkinsfile under a folder which should be named the same as the job name. The type of these jobs should generally be a pipeline, rather than a multibranch pipeline or a freestyle job. The reason for using the pipeline type rather than freestyle is because with a pipeline you can define what the job does in a separate Jenkinsfile, whereas with a freestyle, you need to define the steps for the job in the job definition itself. Looking at the [documentation for freestyle jobs](https://jenkinsci.github.io/job-dsl-plugin/#path/freeStyleJob) should hopefully make that clear. A pipeline type may seem excessive for these types of jobs, but the separation of job definition and implemenation is preferred.
+
+Please also add an entry to the jobs summary table to briefly describe the job.
 
 ### Job Naming Guidelines
 

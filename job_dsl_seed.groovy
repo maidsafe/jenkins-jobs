@@ -39,3 +39,27 @@ multibranchPipelineJob('pipeline-safe-nd') {
         }
     }
 }
+
+pipelineJob('docker_build-safe_client_libs_build_container') {
+    parameters {
+        stringParam('BRANCH', 'experimental')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe_client_libs.git')
+    }
+
+    description('Builds and pushes the container for Safe Client Libs')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('docker_build-safe_client_libs_build_container/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}

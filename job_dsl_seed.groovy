@@ -64,6 +64,30 @@ pipelineJob('docker_build-safe_client_libs_build_container') {
     }
 }
 
+pipelineJob('docker_build-safe_cli_libs_build_container') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-cli.git')
+    }
+
+    description('Builds and pushes the container for safe-cli')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('docker_build-safe_cli_build_container/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 multibranchPipelineJob('pipeline-safe_cli') {
     branchSources {
         github {

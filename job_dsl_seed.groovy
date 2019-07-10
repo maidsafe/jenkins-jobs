@@ -19,7 +19,7 @@ multibranchPipelineJob('pipeline-safe_client_libs') {
     }
 }
 
-multibranchPipelineJob('pipeline-safe-nd') {
+multibranchPipelineJob('pipeline-safe_nd') {
     branchSources {
         github {
             checkoutCredentialsId('github_maidsafe_token_credentials')
@@ -64,7 +64,7 @@ pipelineJob('docker_build-safe_client_libs_build_container') {
     }
 }
 
-pipelineJob('docker_build-safe_cli_libs_build_container') {
+pipelineJob('docker_build-safe_cli_build_container') {
     parameters {
         stringParam('BRANCH', 'master')
         stringParam(

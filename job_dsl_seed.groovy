@@ -112,6 +112,30 @@ pipelineJob('docker_build-safe_nd_build_container') {
     }
 }
 
+pipelineJob('ami_build-safe_client_libs_slave') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+    }
+
+    description('Builds and pushes the container for safe-nd')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-safe_client_libs_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 multibranchPipelineJob('pipeline-safe_cli') {
     branchSources {
         github {

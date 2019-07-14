@@ -150,7 +150,7 @@ pipelineJob('rust_cache_build-safe_client_libs-windows') {
                 git {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
-                    scriptPath('rust_cache_build-safe_client_libs-windows')
+                    scriptPath('rust_cache_build-safe_client_libs-windows/Jenkinsfile')
                     extensions { }
                 }
             }

@@ -8,7 +8,7 @@ stage('build & push') {
             script: "grep '^version' < Cargo.toml | head -n 1 | awk '{ print \$3 }' | sed 's/\"//g'").trim()
     }
     build(
-        job: 'ami_build-safe_client_libs_slave',
+        job: 'ami_build-safe_nd_slave',
         parameters: [[
             $class: 'StringParameterValue', name: 'SAFE_IMAGE_TAG', value: version]],
         wait: false)

@@ -1,3 +1,53 @@
+pipelineJob('ami_build-safe_cli_slave') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+        stringParam('SAFE_IMAGE_TAG', '')
+    }
+
+    description('Creates a Docker slave AMI for safe-cli')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-safe_cli_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
+pipelineJob('ami_build-safe_client_libs_slave') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+        stringParam('SAFE_IMAGE_TAG', '')
+    }
+
+    description('Creates a Docker slave AMI for safe_client_libs')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-safe_client_libs_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('ami_build-safe_nd_slave') {
     parameters {
         stringParam('BRANCH', 'master')
@@ -7,7 +57,7 @@ pipelineJob('ami_build-safe_nd_slave') {
         stringParam('SAFE_IMAGE_TAG', '')
     }
 
-    description('Builds and pushes the container for safe-nd')
+    description('Creates a Docker slave AMI for safe-nd')
 
     definition {
         cpsScm {

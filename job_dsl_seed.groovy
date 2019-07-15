@@ -19,7 +19,7 @@ multibranchPipelineJob('pipeline-safe_client_libs') {
     }
 }
 
-multibranchPipelineJob('pipeline-safe-nd') {
+multibranchPipelineJob('pipeline-safe_nd') {
     branchSources {
         github {
             checkoutCredentialsId('github_maidsafe_token_credentials')
@@ -129,6 +129,31 @@ multibranchPipelineJob('pipeline-safe_cli') {
     factory {
         workflowBranchProjectFactory {
             scriptPath('Jenkinsfile')
+        }
+    }
+}
+
+pipelineJob('rust_cache_build-safe_client_libs-windows') {
+    parameters {
+        stringParam('BRANCH', 'experimental')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe_client_libs.git')
+        stringParam('S3_BUCKET', 'safe-jenkins-build-artifacts')
+    }
+
+    description('Builds Safe Client Libs on Windows then uploads the target directory for use as a cache.')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('rust_cache_build-safe_client_libs-windows/Jenkinsfile')
+                    extensions { }
+                }
+            }
         }
     }
 }

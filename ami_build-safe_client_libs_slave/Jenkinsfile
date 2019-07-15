@@ -5,7 +5,9 @@ stage('build') {
             credentialsId: "packer",
             accessKeyVariable: "AWS_ACCESS_KEY_ID",
             secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
-            sh("make box-docker_slave-ubuntu-bionic-x86_64-aws")
+            withEnv(['SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass']) {
+                sh("make box-docker_slave-ubuntu-bionic-x86_64-aws")
+            }
         }
     }
 }

@@ -118,6 +118,8 @@ pipelineJob('ami_build-safe_client_libs_slave') {
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe-build-infrastructure.git')
+        stringParam('SAFE_PROJECT', '')
+        stringParam('SAFE_IMAGE_TAG', '')
     }
 
     description('Builds and pushes the container for safe-nd')

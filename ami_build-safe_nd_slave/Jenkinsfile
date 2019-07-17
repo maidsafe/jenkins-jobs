@@ -8,7 +8,7 @@ stage('build') {
             withEnv(['SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass',
                      'SAFE_PROJECT=safe_nd']) {
                 echo("Building Docker slave for ${env.SAFE_PROJECT} with ${env.SAFE_IMAGE_TAG} tag")
-                sh("make box-docker_slave-ubuntu-bionic-x86_64-aws")
+                sh("make box-docker_slave-centos-7.6-x86_64-aws")
             }
         }
     }

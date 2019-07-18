@@ -3,5 +3,13 @@ stage('build & push') {
         git([url: env.REPO_URL, branch: env.BRANCH])
         sh('make build-container')
         sh('make push-container')
+        version = sh(
+            returnStdout: true,
+            script: "grep '^version' < Cargo.toml | head -n 1 | awk '{ print \$3 }' | sed 's/\"//g'").trim()
     }
+    build(
+        job: 'ami_build-safe_nd_slave',
+        parameters: [[
+            $class: 'StringParameterValue', name: 'SAFE_IMAGE_TAG', value: version]],
+        wait: false)
 }

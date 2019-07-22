@@ -1,3 +1,27 @@
+pipelineJob('ami_build-rust_slave_windows') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+    }
+
+    description('Creates a Windows slave with the latest stable version of Rust')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-rust_slave_windows/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('ami_build-safe_cli_slave') {
     parameters {
         stringParam('BRANCH', 'master')

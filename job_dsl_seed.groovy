@@ -232,6 +232,27 @@ multibranchPipelineJob('pipeline-safe_nd') {
     }
 }
 
+multibranchPipelineJob('pipeline-safe_vault') {
+    branchSources {
+        github {
+            checkoutCredentialsId('github_maidsafe_token_credentials')
+            scanCredentialsId('github_maidsafe_token_credentials')
+            repoOwner('maidsafe')
+            repository('safe_vault')
+        }
+    }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
+    factory {
+        workflowBranchProjectFactory {
+            scriptPath('Jenkinsfile')
+        }
+    }
+}
+
 pipelineJob('rust_cache_build-safe_client_libs-windows') {
     parameters {
         stringParam('BRANCH', 'experimental')

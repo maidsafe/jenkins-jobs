@@ -14,8 +14,9 @@ This repository houses the definitions for jobs on our Jenkins instance. They ar
 | docker_build-safe_cli_libs_build_container    | Constructs a new build container for safe-cli. |
 | docker_build-safe_nd_libs_build_container     | Constructs a new build container for safe-nd.  |
 | pipeline-safe_cli                             | Release pipeline for [safe-cli](https://github.com/maidsafe/safe-nd). This pipeline will build and test on Linux, Windows and macOS and deploy artifacts to GitHub releases. |
-| pipeline-safe-nd                              | Release pipeline for [safe-nd](https://github.com/maidsafe/safe-nd). Currently this release process only has a simple build and test stage. |
 | pipeline-safe_client_libs                     | Release pipeline for [safe_client_libs](https://github.com/maidsafe/safe_client_libs). Has a build, test and deploy stage, with artifacts for all platforms being deployed to an S3 bucket. |
+| pipeline-safe_nd                              | Release pipeline for [safe-nd](https://github.com/maidsafe/safe-nd). Currently this release process only has a simple build and test stage. |
+| pipeline-safe_vault                           | Release pipeline for [safe_vault](https://github.com/maidsafe/safe_vault). Builds on Linux, Windows and macOS and deploys to GitHub releases. |
 | rust_cache_build-safe_client_libs-windows     | Builds an SCL branch on a Windows node then uploads the resulting target directory as a tar. It's intended to be used as a cache for Windows builds. |
 
 ## Contributing

@@ -253,6 +253,23 @@ multibranchPipelineJob('pipeline-safe_vault') {
     }
 }
 
+pipelineJob('pipeline-sandbox') {
+    description('Use this project as a test bed for experimentation')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins_sample_lib.git') }
+                    branches('master')
+                    scriptPath('Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('rust_cache_build-safe_client_libs-windows') {
     parameters {
         stringParam('BRANCH', 'experimental')

@@ -6,6 +6,7 @@ stage('build') {
             accessKeyVariable: "AWS_ACCESS_KEY_ID",
             secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
             withEnv(['SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass',
+                     'SAFE_IMAGE_TAG=build',
                      'SAFE_PROJECT=safe_cli']) {
                 echo("Building Docker slave for ${env.SAFE_PROJECT} with ${env.SAFE_IMAGE_TAG} tag")
                 sh("make box-docker_slave-centos-7.6-x86_64-aws")

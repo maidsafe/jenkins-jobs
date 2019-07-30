@@ -1,3 +1,27 @@
+pipelineJob('ami_build-rust_slave_windows') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+    }
+
+    description('Creates a Windows slave with the latest stable version of Rust')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-rust_slave_windows/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('ami_build-safe_cli_slave') {
     parameters {
         stringParam('BRANCH', 'master')
@@ -194,6 +218,27 @@ multibranchPipelineJob('pipeline-safe_nd') {
             scanCredentialsId('github_maidsafe_token_credentials')
             repoOwner('maidsafe')
             repository('safe-nd')
+        }
+    }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
+    factory {
+        workflowBranchProjectFactory {
+            scriptPath('Jenkinsfile')
+        }
+    }
+}
+
+multibranchPipelineJob('pipeline-safe_vault') {
+    branchSources {
+        github {
+            checkoutCredentialsId('github_maidsafe_token_credentials')
+            scanCredentialsId('github_maidsafe_token_credentials')
+            repoOwner('maidsafe')
+            repository('safe_vault')
         }
     }
     orphanedItemStrategy {

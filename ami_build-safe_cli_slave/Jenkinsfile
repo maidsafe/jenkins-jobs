@@ -1,10 +1,12 @@
 stage('build') {
     node('util') {
         git([url: env.REPO_URL, branch: env.BRANCH])
-        withCredentials([[$class: "AmazonWebServicesCredentialsBinding",
-            credentialsId: "packer",
-            accessKeyVariable: "AWS_ACCESS_KEY_ID",
-            secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
+        withCredentials(
+            [[$class:
+                "AmazonWebServicesCredentialsBinding",
+                credentialsId: "packer",
+                accessKeyVariable: "AWS_ACCESS_KEY_ID",
+                secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
             withEnv(['SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass',
                      'SAFE_IMAGE_TAG=build',
                      'SAFE_PROJECT=safe_cli']) {

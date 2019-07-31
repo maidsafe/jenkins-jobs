@@ -4,5 +4,5 @@ stage('build & push') {
         sh('make build-container')
         sh('make push-container')
     }
-    build(job: 'ami_build-safe_client_libs_slave', wait: false)
+    build(job: 'ami_build-safe_vault_slave', wait: false)
 }

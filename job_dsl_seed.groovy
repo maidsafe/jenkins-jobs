@@ -28,7 +28,6 @@ pipelineJob('ami_build-safe_cli_slave') {
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe-build-infrastructure.git')
-        stringParam('SAFE_IMAGE_TAG', '')
     }
 
     description('Creates a Docker slave AMI for safe-cli')
@@ -53,7 +52,6 @@ pipelineJob('ami_build-safe_client_libs_slave') {
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe-build-infrastructure.git')
-        stringParam('SAFE_IMAGE_TAG', '')
     }
 
     description('Creates a Docker slave AMI for safe_client_libs')
@@ -78,7 +76,6 @@ pipelineJob('ami_build-safe_nd_slave') {
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe-build-infrastructure.git')
-        stringParam('SAFE_IMAGE_TAG', '')
     }
 
     description('Creates a Docker slave AMI for safe-nd')
@@ -90,6 +87,30 @@ pipelineJob('ami_build-safe_nd_slave') {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
                     scriptPath('ami_build-safe_nd_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
+pipelineJob('ami_build-safe_vault_slave') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+    }
+
+    description('Creates a Docker slave AMI for safe_vault')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-safe_vault_slave/Jenkinsfile')
                     extensions { }
                 }
             }
@@ -162,6 +183,30 @@ pipelineJob('docker_build-safe_nd_build_container') {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
                     scriptPath('docker_build-safe_nd_build_container/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
+pipelineJob('docker_build-safe_vault_build_container') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe_vault.git')
+    }
+
+    description('Builds and pushes the container for safe_vault')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('docker_build-safe_vault_build_container/Jenkinsfile')
                     extensions { }
                 }
             }

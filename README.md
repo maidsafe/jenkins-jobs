@@ -21,6 +21,7 @@ This repository houses the definitions for jobs on our Jenkins instance. They ar
 | pipeline-safe_vault                           | Release pipeline for [safe_vault](https://github.com/maidsafe/safe_vault). Builds on Linux, Windows and macOS and deploys to GitHub releases. |
 | pipeline-sandbox                              | This is not a multibranch pipeline. It's intended for quick experimentation when that is necessary. It uses a simple Rust library that we can experiment with. |
 | rust_cache_build-safe_client_libs-windows     | Builds an SCL branch on a Windows node then uploads the resulting target directory as a tar. It's intended to be used as a cache for Windows builds. |
+| rust_cache_build-safe_vault-windows           | Builds a safe_vault branch on a Windows node then uploads the resulting target directory as a tar. It's intended to be used as a cache for Windows builds. |
 
 ## Contributing
 

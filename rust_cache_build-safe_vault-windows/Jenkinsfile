@@ -1,0 +1,17 @@
+stage('build & upload') {
+    node('windows') {
+        sh('rm -rf **')
+        git([url: env.REPO_URL, branch: env.BRANCH])
+        sh('make test')
+        sh("tar -C target -zcvf safe_vault-${env.BRANCH}-windows-cache.tar.gz .")
+        withAWS(credentials: 'aws_jenkins_build_artifacts_user', region: 'eu-west-2') {
+            s3Delete(
+                bucket: "${env.S3_BUCKET}",
+                path: "safe_vault-${env.BRANCH}-windows-cache.tar.gz")
+            s3Upload(
+                bucket: "${env.S3_BUCKET}",
+                file: "safe_vault-${env.BRANCH}-windows-cache.tar.gz",
+                acl: 'PublicRead')
+        }
+    }
+}

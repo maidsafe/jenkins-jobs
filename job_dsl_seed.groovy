@@ -339,3 +339,28 @@ pipelineJob('rust_cache_build-safe_client_libs-windows') {
         }
     }
 }
+
+pipelineJob('rust_cache_build-safe_vault-windows') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe_vault.git')
+        stringParam('S3_BUCKET', 'safe-jenkins-build-artifacts')
+    }
+
+    description('Builds Safe Vault on Windows then uploads the target directory for use as a cache.')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('rust_cache_build-safe_vault-windows/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}

@@ -262,6 +262,27 @@ pipelineJob('docker_build-safe_vault_build_container') {
     }
 }
 
+multibranchPipelineJob('pipeline-safe_authenticator_cli') {
+    branchSources {
+        github {
+            checkoutCredentialsId('github_maidsafe_token_credentials')
+            scanCredentialsId('github_maidsafe_token_credentials')
+            repoOwner('maidsafe')
+            repository('safe-authenticator-cli')
+        }
+    }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
+    factory {
+        workflowBranchProjectFactory {
+            scriptPath('Jenkinsfile')
+        }
+    }
+}
+
 multibranchPipelineJob('pipeline-safe_cli') {
     branchSources {
         github {

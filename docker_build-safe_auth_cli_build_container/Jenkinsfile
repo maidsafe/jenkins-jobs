@@ -9,7 +9,7 @@ stage("build & push") {
             script: "git rev-parse --short HEAD").trim()
     }
     build(
-        job: "ami_build-safe_authenticator_cli_slave",
+        job: "ami_build-safe_auth_cli_slave",
         parameters:
         [
             [

@@ -22,6 +22,30 @@ pipelineJob('ami_build-rust_slave_windows') {
     }
 }
 
+pipelineJob('ami_build-safe_auth_cli_slave') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-build-infrastructure.git')
+    }
+
+    description('Creates a Docker slave AMI for safe-authenticator-cli')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('ami_build-safe_auth_cli_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('ami_build-safe_cli_slave') {
     parameters {
         stringParam('BRANCH', 'master')
@@ -111,6 +135,30 @@ pipelineJob('ami_build-safe_vault_slave') {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
                     scriptPath('ami_build-safe_vault_slave/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
+pipelineJob('docker_build-safe_auth_cli_build_container') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-authenticator-cli.git')
+    }
+
+    description('Builds and pushes the container for safe-authenticator-cli')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('docker_build-safe_auth_cli_build_container/Jenkinsfile')
                     extensions { }
                 }
             }
@@ -308,6 +356,31 @@ pipelineJob('pipeline-sandbox') {
                     remote { url('https://github.com/maidsafe/jenkins_sample_lib.git') }
                     branches('master')
                     scriptPath('Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
+pipelineJob('rust_cache_build-safe_auth_cli-windows') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-authenticator-cli.git')
+        stringParam('S3_BUCKET', 'safe-jenkins-build-artifacts')
+    }
+
+    description('Builds safe-authenticator-cli on Windows then uploads the target directory for use as a cache.')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('rust_cache_build-safe_auth_cli-windows/Jenkinsfile')
                     extensions { }
                 }
             }

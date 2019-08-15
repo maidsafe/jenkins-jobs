@@ -409,6 +409,31 @@ pipelineJob('rust_cache_build-safe_auth_cli-windows') {
     }
 }
 
+pipelineJob('rust_cache_build-safe_cli') {
+    parameters {
+        stringParam('BRANCH', 'master')
+        stringParam(
+            'REPO_URL',
+            'https://github.com/maidsafe/safe-cli.git')
+        stringParam('S3_BUCKET', 'safe-jenkins-build-artifacts')
+    }
+
+    description('Builds safe-cli on Windows and macOS then uploads the target directory for use as a cache.')
+
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
+                    branches('master')
+                    scriptPath('rust_cache_build-safe_cli/Jenkinsfile')
+                    extensions { }
+                }
+            }
+        }
+    }
+}
+
 pipelineJob('rust_cache_build-safe_client_libs-windows') {
     parameters {
         stringParam('BRANCH', 'experimental')

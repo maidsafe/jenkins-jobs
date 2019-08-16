@@ -1,12 +1,21 @@
 stage("build & push") {
     commit_hash = ""
-    node("util") {
-        git([url: env.REPO_URL, branch: env.BRANCH])
-        sh("make build-container")
-        sh("make push-container")
-        commitHash = sh(
-            returnStdout: true,
-            script: "git rev-parse --short HEAD").trim()
+    parallel dev_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-container")
+            sh("make push-container")
+            commitHash = sh(
+                returnStdout: true,
+                script: "git rev-parse --short HEAD").trim()
+        }
+    },
+    non_dev_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-dev-container")
+            sh("make push-dev-container")
+        }
     }
     build(
         job: "ami_build-safe_cli_slave",

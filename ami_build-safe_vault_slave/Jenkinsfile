@@ -1,6 +1,7 @@
 stage("build") {
     node("util") {
         git([url: env.REPO_URL, branch: env.BRANCH])
+        buildNumber = "${env.BUILD_NUMBER}".padLeft(4, '0')
         withCredentials(
             [[$class:
                 "AmazonWebServicesCredentialsBinding",
@@ -8,7 +9,7 @@ stage("build") {
                 accessKeyVariable: "AWS_ACCESS_KEY_ID",
                 secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
             withEnv(["SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass",
-                     "SAFE_COMMIT_HASH=${params.SAFE_COMMIT_HASH}",
+                     "SAFE_COMMIT_HASH=${buildNumber}",
                      "SAFE_IMAGE_TAG=build",
                      "SAFE_PROJECT=safe_vault"]) {
                 echo("Building Docker slave for ${env.SAFE_PROJECT} with ${env.SAFE_IMAGE_TAG} tag")

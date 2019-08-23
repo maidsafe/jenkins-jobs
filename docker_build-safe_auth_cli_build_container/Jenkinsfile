@@ -11,9 +11,11 @@ stage("build & push") {
         }
     },
     real_container: {
-        git([url: env.REPO_URL, branch: env.BRANCH])
-        sh("make build-container")
-        sh("make push-container")
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-container")
+            sh("make push-container")
+        }
     }
     build(
         job: "ami_build-safe_auth_cli_slave",

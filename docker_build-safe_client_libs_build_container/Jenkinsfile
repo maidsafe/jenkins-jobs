@@ -16,6 +16,40 @@ stage("build & push") {
             sh("make build-container")
             sh("make push-container")
         }
+    },
+    android_armv7_mock_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-android-armv7-mock-container")
+            sh("make push-android-armv7-mock-container")
+            commitHash = sh(
+                returnStdout: true,
+                script: "git rev-parse --short HEAD").trim()
+        }
+    },
+    android_armv7_real_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-android-armv7-container")
+            sh("make push-android-armv7-container")
+        }
+    },
+    android_x86_64_mock_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-android-x86_64-mock-container")
+            sh("make push-android-x86_64-mock-container")
+            commitHash = sh(
+                returnStdout: true,
+                script: "git rev-parse --short HEAD").trim()
+        }
+    },
+    android_x86_64_real_container: {
+        node("util") {
+            git([url: env.REPO_URL, branch: env.BRANCH])
+            sh("make build-android-x86_64-container")
+            sh("make push-android-x86_64-container")
+        }
     }
     build(
         job: "ami_build-safe_client_libs_slave",

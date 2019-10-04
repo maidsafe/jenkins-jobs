@@ -13,7 +13,7 @@ This repository houses the definitions for jobs on our Jenkins instance. They ar
 | ami_build-safe_nd_slave                       | Creates a new AMI with the Safe Network Data Types build container pulled into it.                                                                                                                                                                    |
 | ami_build-safe_vault_slave                    | Creates a new AMI with the Safe Vault build container pulled into it.                                                                                                                                                                    |
 | docker_build-safe_auth_cli_build_container    | Constructs a new build container for safe-authenticator-cli. |
-| docker_build-safe_client_libs_build_container | Constructs a new build container for SCL. Currently this is using the experimental branch by default. It can be run manually, but soon I'll be hoping to change the SCL build process to trigger this job at the end of a merged branch build. |
+| docker_build-safe_client_libs_build_container | Constructs a new build container for SCL. |
 | docker_build-safe_cli_libs_build_container    | Constructs a new build container for safe-cli. |
 | docker_build-safe_nd_libs_build_container     | Constructs a new build container for safe-nd.  |
 | docker_build-safe_vault_libs_build_container  | Constructs a new build container for safe_vault.  |

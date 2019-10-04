@@ -192,7 +192,7 @@ pipelineJob('docker_build-safe_cli_build_container') {
 
 pipelineJob('docker_build-safe_client_libs_build_container') {
     parameters {
-        stringParam('BRANCH', 'experimental')
+        stringParam('BRANCH', 'master')
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe_client_libs.git')
@@ -436,7 +436,7 @@ pipelineJob('rust_cache_build-safe_cli') {
 
 pipelineJob('rust_cache_build-safe_client_libs-windows') {
     parameters {
-        stringParam('BRANCH', 'experimental')
+        stringParam('BRANCH', 'master')
         stringParam(
             'REPO_URL',
             'https://github.com/maidsafe/safe_client_libs.git')

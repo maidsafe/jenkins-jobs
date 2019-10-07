@@ -1,22 +1,53 @@
 stage("build & push") {
     commit_hash = ""
-    parallel dev_container: {
+    parallel(cli_dev_container: {
         node("util") {
-            git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-container")
-            sh("make push-container")
+            buildAndPushContainer("safe-cli", "dev", "x86_64-unknown-linux-gnu")
             commitHash = sh(
                 returnStdout: true,
                 script: "git rev-parse --short HEAD").trim()
         }
     },
-    non_dev_container: {
+    cli_container: {
         node("util") {
-            git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-dev-container")
-            sh("make push-dev-container")
+            buildAndPushContainer("safe-cli", "non-dev", "x86_64-unknown-linux-gnu")
         }
-    }
+    },
+    api_container: {
+        node("util") {
+            buildAndPushContainer("safe-api", "dev", "x86_64-unknown-linux-gnu")
+        }
+    },
+    ffi_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "non-dev", "x86_64-unknown-linux-gnu")
+        }
+    },
+    ffi_dev_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "dev", "x86_64-unknown-linux-gnu")
+        }
+    },
+    ffi_android_armv7_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "non-dev", "armv7-linux-androideabi")
+        }
+    },
+    ffi_android_armv7_dev_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "dev", "armv7-linux-androideabi")
+        }
+    },
+    ffi_android_x86_64_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "non-dev", "x86_64-linux-android")
+        }
+    },
+    ffi_android_x86_64_dev_container: {
+        node("util") {
+            buildAndPushContainer("safe-ffi", "dev", "x86_64-linux-android")
+        }
+    })
     build(
         job: "ami_build-safe_cli_slave",
         parameters:
@@ -28,4 +59,14 @@ stage("build & push") {
             ]
         ],
         wait: false)
+}
+
+def buildAndPushContainer(component, type, target) {
+    git([url: env.REPO_URL, branch: env.BRANCH])
+    withEnv(["SAFE_CLI_CONTAINER_COMPONENT=${component}",
+             "SAFE_CLI_CONTAINER_TYPE=${type}",
+             "SAFE_CLI_CONTAINER_TARGET=${target}"]) {
+        sh("make build-container")
+        sh("make push-container")
+    }
 }

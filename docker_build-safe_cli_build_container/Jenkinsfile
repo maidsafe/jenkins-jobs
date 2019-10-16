@@ -63,7 +63,9 @@ stage("build & push") {
 
 def buildAndPushContainer(component, type, target) {
     git([url: env.REPO_URL, branch: env.BRANCH])
-    withEnv(["SAFE_CLI_CONTAINER_COMPONENT=${component}",
+    withEnv(["AWS_MAX_ATTEMPTS=80",
+             "AWS_POLL_DELAY_SECONDS=60",
+             "SAFE_CLI_CONTAINER_COMPONENT=${component}",
              "SAFE_CLI_CONTAINER_TYPE=${type}",
              "SAFE_CLI_CONTAINER_TARGET=${target}"]) {
         sh("make build-container")

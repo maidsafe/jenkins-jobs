@@ -8,7 +8,9 @@ stage("build") {
                 credentialsId: "packer",
                 accessKeyVariable: "AWS_ACCESS_KEY_ID",
                 secretKeyVariable: "AWS_SECRET_ACCESS_KEY"]]) {
-            withEnv(["SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass",
+            withEnv(["AWS_MAX_ATTEMPTS=100",
+                     "AWS_POLL_DELAY_SECONDS=60",
+                     "SAFE_BUILD_INFRA_VAULT_PASS_PATH=/home/util/.ansible/vault-pass",
                      "SAFE_COMMIT_HASH=${buildNumber}",
                      "SAFE_IMAGE_TAG=build",
                      "SAFE_PROJECT=safe_cli"]) {

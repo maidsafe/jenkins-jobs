@@ -46,7 +46,7 @@ pipelineJob('ami_build-safe_auth_cli_slave') {
     }
 }
 
-pipelineJob('ami_build-safe_cli_slave') {
+pipelineJob('ami_build-safe_api_slave') {
     parameters {
         stringParam('BRANCH', 'master')
         stringParam(
@@ -54,7 +54,7 @@ pipelineJob('ami_build-safe_cli_slave') {
             'https://github.com/maidsafe/safe-build-infrastructure.git')
     }
 
-    description('Creates a Docker slave AMI for safe-cli')
+    description('Creates a Docker slave AMI for safe-api')
 
     definition {
         cpsScm {
@@ -62,7 +62,7 @@ pipelineJob('ami_build-safe_cli_slave') {
                 git {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
-                    scriptPath('ami_build-safe_cli_slave/Jenkinsfile')
+                    scriptPath('ami_build-safe_api_slave/Jenkinsfile')
                     extensions { }
                 }
             }
@@ -166,15 +166,15 @@ pipelineJob('docker_build-safe_auth_cli_build_container') {
     }
 }
 
-pipelineJob('docker_build-safe_cli_build_container') {
+pipelineJob('docker_build-safe_api_build_container') {
     parameters {
         stringParam('BRANCH', 'master')
         stringParam(
             'REPO_URL',
-            'https://github.com/maidsafe/safe-cli.git')
+            'https://github.com/maidsafe/safe-api.git')
     }
 
-    description('Builds and pushes the container for safe-cli')
+    description('Builds and pushes the container for safe-api')
 
     definition {
         cpsScm {
@@ -182,7 +182,7 @@ pipelineJob('docker_build-safe_cli_build_container') {
                 git {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
-                    scriptPath('docker_build-safe_cli_build_container/Jenkinsfile')
+                    scriptPath('docker_build-safe_api_build_container/Jenkinsfile')
                     extensions { }
                 }
             }
@@ -283,13 +283,13 @@ multibranchPipelineJob('pipeline-safe_authenticator_cli') {
     }
 }
 
-multibranchPipelineJob('pipeline-safe_cli') {
+multibranchPipelineJob('pipeline-safe_api') {
     branchSources {
         github {
             checkoutCredentialsId('github_maidsafe_token_credentials')
             scanCredentialsId('github_maidsafe_token_credentials')
             repoOwner('maidsafe')
-            repository('safe-cli')
+            repository('safe-api')
         }
     }
     orphanedItemStrategy {
@@ -409,16 +409,16 @@ pipelineJob('rust_cache_build-safe_auth_cli-windows') {
     }
 }
 
-pipelineJob('rust_cache_build-safe_cli') {
+pipelineJob('rust_cache_build-safe_api') {
     parameters {
         stringParam('BRANCH', 'master')
         stringParam(
             'REPO_URL',
-            'https://github.com/maidsafe/safe-cli.git')
+            'https://github.com/maidsafe/safe-api.git')
         stringParam('S3_BUCKET', 'safe-jenkins-build-artifacts')
     }
 
-    description('Builds safe-cli on Windows and macOS then uploads the target directory for use as a cache.')
+    description('Builds safe-api on Windows and macOS then uploads the target directory for use as a cache.')
 
     definition {
         cpsScm {
@@ -426,7 +426,7 @@ pipelineJob('rust_cache_build-safe_cli') {
                 git {
                     remote { url('https://github.com/maidsafe/jenkins-jobs.git') }
                     branches('master')
-                    scriptPath('rust_cache_build-safe_cli/Jenkinsfile')
+                    scriptPath('rust_cache_build-safe_api/Jenkinsfile')
                     extensions { }
                 }
             }

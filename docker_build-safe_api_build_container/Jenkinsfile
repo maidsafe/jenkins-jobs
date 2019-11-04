@@ -49,7 +49,7 @@ stage("build & push") {
         }
     })
     build(
-        job: "ami_build-safe_cli_slave",
+        job: "ami_build-safe_ami_slave",
         parameters:
         [
             [

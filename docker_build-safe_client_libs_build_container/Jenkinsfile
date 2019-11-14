@@ -1,54 +1,42 @@
 stage("build & push") {
     commit_hash = ""
-    parallel mock_container: {
+    parallel dev_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-mock-container")
-            sh("make push-mock-container")
             commitHash = sh(
                 returnStdout: true,
                 script: "git rev-parse --short HEAD").trim()
+            buildAndPushContainer("dev", "x86_64-unknown-linux-gnu")
         }
     },
-    real_container: {
+    prod_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-container")
-            sh("make push-container")
+            buildAndPushContainer("prod", "x86_64-unknown-linux-gnu")
         }
     },
-    android_armv7_mock_container: {
+    android_armv7_prod_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-android-armv7-mock-container")
-            sh("make push-android-armv7-mock-container")
-            commitHash = sh(
-                returnStdout: true,
-                script: "git rev-parse --short HEAD").trim()
+            buildAndPushContainer("prod", "armv7-linux-androideabi")
         }
     },
-    android_armv7_real_container: {
+    android_armv7_dev_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-android-armv7-container")
-            sh("make push-android-armv7-container")
+            buildAndPushContainer("dev", "armv7-linux-androideabi")
         }
     },
-    android_x86_64_mock_container: {
+    android_x86_64_dev_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-android-x86_64-mock-container")
-            sh("make push-android-x86_64-mock-container")
-            commitHash = sh(
-                returnStdout: true,
-                script: "git rev-parse --short HEAD").trim()
+            buildAndPushContainer("dev", "x86_64-linux-android")
         }
     },
-    android_x86_64_real_container: {
+    android_x86_64_prod_container: {
         node("util") {
             git([url: env.REPO_URL, branch: env.BRANCH])
-            sh("make build-android-x86_64-container")
-            sh("make push-android-x86_64-container")
+            buildAndPushContainer("prod", "x86_64-linux-android")
         }
     }
     build(
@@ -62,4 +50,13 @@ stage("build & push") {
             ]
         ],
         wait: false)
+}
+
+def buildAndPushContainer(type, target) {
+    git([url: env.REPO_URL, branch: env.BRANCH])
+    withEnv(["SAFE_CLIENT_LIBS_CONTAINER_TYPE=${component}",
+             "SAFE_CLIENT_LIBS_CONTAINER_TARGET=${target}"]) {
+        sh("make build-container")
+        sh("make push-container")
+    }
 }

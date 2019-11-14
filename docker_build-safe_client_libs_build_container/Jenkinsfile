@@ -54,7 +54,7 @@ stage("build & push") {
 
 def buildAndPushContainer(type, target) {
     git([url: env.REPO_URL, branch: env.BRANCH])
-    withEnv(["SAFE_CLIENT_LIBS_CONTAINER_TYPE=${component}",
+    withEnv(["SAFE_CLIENT_LIBS_CONTAINER_TYPE=${type}",
              "SAFE_CLIENT_LIBS_CONTAINER_TARGET=${target}"]) {
         sh("make build-container")
         sh("make push-container")

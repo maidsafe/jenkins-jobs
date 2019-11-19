@@ -10,7 +10,7 @@ stage("build & push") {
     },
     cli_container: {
         node("util") {
-            buildAndPushContainer("safe-cli", "non-dev", "x86_64-unknown-linux-gnu")
+            buildAndPushContainer("safe-cli", "prod", "x86_64-unknown-linux-gnu")
         }
     },
     api_container: {
@@ -20,7 +20,7 @@ stage("build & push") {
     },
     ffi_container: {
         node("util") {
-            buildAndPushContainer("safe-ffi", "non-dev", "x86_64-unknown-linux-gnu")
+            buildAndPushContainer("safe-ffi", "prod", "x86_64-unknown-linux-gnu")
         }
     },
     ffi_dev_container: {
@@ -30,7 +30,7 @@ stage("build & push") {
     },
     ffi_android_armv7_container: {
         node("util") {
-            buildAndPushContainer("safe-ffi", "non-dev", "armv7-linux-androideabi")
+            buildAndPushContainer("safe-ffi", "prod", "armv7-linux-androideabi")
         }
     },
     ffi_android_armv7_dev_container: {
@@ -40,7 +40,7 @@ stage("build & push") {
     },
     ffi_android_x86_64_container: {
         node("util") {
-            buildAndPushContainer("safe-ffi", "non-dev", "x86_64-linux-android")
+            buildAndPushContainer("safe-ffi", "prod", "x86_64-linux-android")
         }
     },
     ffi_android_x86_64_dev_container: {
